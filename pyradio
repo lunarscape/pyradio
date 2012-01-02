@@ -11,6 +11,7 @@ import thread
 import random
 import subprocess
 import logging
+import ConfigParser
 
 def rel(path):
     return os.path.join(os.path.abspath(os.path.dirname(__file__)), path)
@@ -104,9 +105,8 @@ class PyRadio(object):
     selection = 0
     playing = -1
 
-    def __init__(self, stations):
-        self.stations = stations
-
+    def __init__(self, config):
+        self.stations = config.items('Stations')
     def setup(self, stdscr):
         self.stdscr = stdscr
 
@@ -289,40 +289,11 @@ class PyRadio(object):
             #self.refreshBody()
 
 if __name__ == "__main__":
-    # Default stations list
-    stations = [
-        ("Digitally Imported: Chillout", "http://di.fm/mp3/chillout.pls"),
-        ("Digitally Imported: Trance", "http://di.fm/mp3/trance.pls"),
-        ("Digitally Imported: Classic Techno", "http://di.fm/mp3/classictechno.pls"),
-        ("Frequence 3 (Pop)", "http://streams.frequence3.net/hd-mp3.m3u"),
-        ("Mostly Classical", "http://www.sky.fm/mp3/classical.pls"),
-        ("Ragga Kings", "http://www.raggakings.net/listen.m3u"),
-        ("Secret Agent (Downtempo)", "http://somafm.com/secretagent.pls"),
-        ("Slay Radio (C64 Remix)", "http://sc.slayradio.org:8000/listen.pls"),
-        ("SomaFM: Groove Salad", "http://somafm.com/startstream=groovesalad.pls"),
-        ("SomaFM: Beat Blender", "http://somafm.com/startstream=beatblender.pls"),
-        ("SomaFM: Cliq Hop", "http://somafm.com/startstream=cliqhop.pls"),
-        ("SomaFM: Sonic Universe", "http://somafm.com/startstream=sonicuniverse.pls"),
-        ("SomaFM: Tags Trance Trip", "http://somafm.com/tagstrance.pls"),
-    ]
-    csvFile = os.path.join(os.path.abspath(os.path.dirname(__file__)), "stations.csv")
-    if len(sys.argv) > 1 and sys.argv[1]:
-        csvFile = sys.argv[1]
-
-    try:
-        csv = open(csvFile, "r")
-        stations = []
-        for line in csv.readlines():
-            line = line.strip()
-            if not line:
-                continue
-            try:
-                (name, url) = line.split(",")
-                stations.append((name, url))
-            except:
-                print "Error, skipping ", line
-    except IOError:
-        print "Could not open stations file '%s'. Using default stations list" % csvFile
-
-    pyRadio = PyRadio(stations)
-    curses.wrapper(pyRadio.setup)
+    # Read configuration from file
+    config = ConfigParser.ConfigParser()
+    config.optionxform = str #Case senitive
+    if not config.read("pyradio.conf"):
+        print "Error: Could not open config file."
+    else:
+        pyRadio = PyRadio(config)
+        curses.wrapper(pyRadio.setup)
