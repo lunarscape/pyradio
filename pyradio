@@ -52,6 +52,7 @@ class Player(object):
 
     def __init__(self, outputStream):
         self.outputStream = outputStream
+        self.cachevalue = 0
 
     def __del__(self):
         self.close()
@@ -68,9 +69,9 @@ class Player(object):
     def play(self, stream_url):
         self.close()
         if stream_url.split("?")[0][-3:] in ['m3u', 'pls']:
-            opts = ["mplayer", "-cache" , "300", "-quiet", "-playlist", stream_url]
+            opts = ["mplayer", "-cache" , str(self.cachevalue), "-quiet", "-playlist", stream_url]
         else:
-            opts = ["mplayer", "-cache" , "300", "-quiet", stream_url]
+            opts = ["mplayer", "-cache" , str(self.cachevalue), "-quiet", stream_url]
         self.process = subprocess.Popen(opts, shell=False, stdout=subprocess.PIPE, stdin=subprocess.PIPE, stderr=subprocess.STDOUT)
         thread.start_new_thread(self.updateStatus, ())
 
@@ -86,6 +87,9 @@ class Player(object):
 
     def pause(self):
         self.sendCommand("p")
+        
+    def setCache(self, cachevalue):
+        self.cachevalue = cachevalue
 
     def close(self):
         self.sendCommand("q")
@@ -107,6 +111,7 @@ class PyRadio(object):
 
     def __init__(self, config):
         self.stations = config.items('Stations')
+        self.cachevalue = config.get('Options','Cache')
     def setup(self, stdscr):
         self.stdscr = stdscr
 
@@ -127,7 +132,7 @@ class PyRadio(object):
 
         self.log = Log()
         self.player = Player(self.log)
-
+        self.player.setCache(self.cachevalue);
         logging.info("Started")
 
         self.stdscr.nodelay(0)
