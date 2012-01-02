@@ -1,4 +1,5 @@
 # Find lots more stations at http://www.iheard.com
+96fm, http://stream5.radiomonitor.com/96FM.m3u
 Afterhours.FM (Trance/Progressive), http://at2.ah.fm:80	
 Bluemars (Ambient), http://207.200.96.225:8020/listen.pls
 Bluemars: Cryosleep (Ambient), http://207.200.96.225:8022/listen.pls
@@ -14,6 +15,9 @@ Electronic Culture, http://www.shouted.fm/tunein/electro-dsl.m3u
 Frequence 3 (Pop), http://streams.frequence3.net/hd-mp3.m3u
 OEM Radio, http://205.188.215.231:8000/listen.pls
 Ragga Kings, http://www.raggakings.net/listen.m3u
+RTE 2fm, rtsp://live1.rte.ie/redundant/2fm.ragit status
+RTE Lyric fm, rtsp://live2.rte.ie/redundant/lyric.ra
+RTE Raidio na Gaeltachta, rtsp://live1.rte.ie/redundant/rnag.ra
 SKY.FM: Mostly Classical, http://www.sky.fm/mp3/classical.pls
 SKY.FM: Jazz, http://www.sky.fm/mp3/jazz.pls
 SKY.FM: Smooth Jazz, http://www.sky.fm/mp3/smoothjazz.pls
