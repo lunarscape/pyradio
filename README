@@ -1,12 +1,16 @@
-PyRadio
-=======
+PyRadioAlt 0.1
+==============
+A curses based Internet Radio Player based on PyRadio
+Forked from http://www.coderholic.com/pyradio (Ben Dowling)
 
-Command line internet radio player. Requires mplayer.
+Find online at http://github.com/lunarscape/pyradio
 
-Ben Dowling - http://www.coderholic.com/pyradio
+Requirements
+==============
+mplayer
 
 Controls
-========
+==============
 Up/Down/PgUp/PgDown 	Change station selection
 Enter 					Play selected station
 -/+						Change volume
