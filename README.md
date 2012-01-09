@@ -9,6 +9,7 @@ Find online at http://github.com/lunarscape/pyradio
 Requirements
 -------
 * mplayer
+* Python 2.7
 
 Controls
 -------
